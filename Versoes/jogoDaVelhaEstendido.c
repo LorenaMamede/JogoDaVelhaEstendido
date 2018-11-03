@@ -3,7 +3,7 @@
 
 
 
-void verificaVitoriaEstendido(int tabuleiro[N][N], int dimensao){
+int verificaVitoriaEstendido(int tabuleiro[N][N], int dimensao){
     int jogador = 0;
     for(int i = 0; i<dimensao;i++){
         int dimAux = dimensao-1;
@@ -60,16 +60,13 @@ void verificaVitoriaEstendido(int tabuleiro[N][N], int dimensao){
         }
 
         if((somaDiagonalInferior==(dimensao-1))||(somaDiagonalSuperior==(dimensao-1))||(somaDiagonalBorda ==(dimensao-1))){//verifica vitoria
-            printf("Ganhou %d \n", jogador);
-            break;
-        }else if(i==(dimensao-1)){
-			printf("empate");
-			break;
-		}
+            return jogador;
+        }
     }
+    return 0;
 }
 
-void verificaVitoria(int tabuleiro[N][N], int dimensao){//vitorias tradicionais
+int verificaVitoria(int tabuleiro[N][N], int dimensao){//vitorias tradicionais
 	int jogador, somaLinha, somaColuna;
 	int somaDiagonal = 0;
 	int somaOutraDiagonal = 0;
@@ -95,38 +92,98 @@ void verificaVitoria(int tabuleiro[N][N], int dimensao){//vitorias tradicionais
 			jogador = tabuleiro[i][dimensao-1-i];
 		}
 		if((somaLinha == (dimensao-1))||(somaColuna == (dimensao-1))||(somaDiagonal == (dimensao-1))||(somaOutraDiagonal == (dimensao-1))){
-			if (jogador == 1){
-				printf("X ganhou \n");
-				break;
-            }else{
-				printf("O ganhou \n");
-				break;
-			}
-		}else if(i==(dimensao-1)){
-			verificaVitoriaEstendido(tabuleiro,dimensao);
+			return jogador;
 		}
     }
+    return verificaVitoriaEstendido(tabuleiro,dimensao);
 }
+
+void verificaGanhador(int jogador){
+	if(!jogador){
+		printf("empate \n");
+	}else {
+		if (jogador==1)
+       		printf("X ganhou ");
+	    else
+	      	printf("O ganhou ");
+	 }
+}
+
+void exibeTabuleiro(int tabuleiro[N][N], int dimensao){
+	
+	for(int a = 1; a < (dimensao+1); a++){
+		printf("  %d ",a);
+	}
+	printf("\n");
+	for(int i = 0; i<dimensao; i++){
+		printf("%d", i + 1);
+		for(int j=0; j<dimensao;j++){
+			if(tabuleiro[i][j]==1)
+				printf(" X ");
+			else if(tabuleiro[i][j]==2)
+				printf(" O ");
+			else
+				printf("   ");
+			if(j!= (dimensao-1))
+				printf("|");
+		}
+		printf("\n");
+	}
+}
+
 int main(void){
 	int tabuleiro[N][N];
 	int dimensao;
+	char jogador;
+	int vez = 0 ;
+	int linha;
+	int coluna;
+	int ganhador;
+	
 
 	puts("Informe um valor entre 3 e 10 para as dimensoe do tabuleiro: ");
 	scanf("%d", &dimensao);
 
-	puts("Entre com o tabuleiro final:");
+
 	for(int i = 0; i<dimensao; i++){
 		for(int j=0; j<dimensao;j++){
-			scanf("%d", &tabuleiro[i][j]);
-		}
+			tabuleiro[i][j]=0;
+		}		
 	}
-	for(int i = 0; i<dimensao; i++){
-		for(int j=0; j<dimensao;j++){
-			printf("%d ", tabuleiro[i][j]);
-		}
+
+	puts("----- A partida comecou!! -----\n");
+	exibeTabuleiro(tabuleiro,dimensao);
+	do{		
+		if(vez%2)
+			jogador = 'X';
+		else
+			jogador = 'O';
+		printf("\n--------- Vez de %c ---------\n", jogador);
+
+		printf("Linha: ");
+		scanf("%d", &linha);
+
+		printf("Coluna: ");
+		scanf("%d", &coluna);
+
 		printf("\n");
-	}
-	verificaVitoria(tabuleiro, dimensao);
+
+		if(vez%2)
+			tabuleiro[linha][coluna] = 1;
+		else
+			tabuleiro[linha][coluna] = 2;
+
+		exibeTabuleiro(tabuleiro,dimensao);
+
+		if (vez>4){
+			ganhador = verificaVitoria(tabuleiro, dimensao);
+			if(ganhador)
+				break;
+		}
+		vez++;
+
+	}while(vez<(dimensao*dimensao));
+	verificaGanhador(ganhador);
 	return 0;
 }
 
