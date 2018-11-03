@@ -111,12 +111,12 @@ void verificaGanhador(int jogador){
 
 void exibeTabuleiro(int tabuleiro[N][N], int dimensao){
 	
-	for(int a = 1; a < (dimensao+1); a++){
+	for(int a = 0; a < dimensao; a++){
 		printf("  %d ",a);
 	}
 	printf("\n");
 	for(int i = 0; i<dimensao; i++){
-		printf("%d", i + 1);
+		printf("%d", i );
 		for(int j=0; j<dimensao;j++){
 			if(tabuleiro[i][j]==1)
 				printf(" X ");
