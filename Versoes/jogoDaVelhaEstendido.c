@@ -1,8 +1,6 @@
 #include <stdio.h>
 #define N 9
 
-
-
 int verificaVitoriaEstendido(int tabuleiro[N][N], int dimensao){
     int jogador = 0;
     for(int i = 0; i<dimensao;i++){
@@ -213,15 +211,16 @@ int jogo(int dimensao, int *ganhador){
 int main(void){
 	int dimensao;
 	int modo;
-	int jogador = 0;
+	int jogador;
 	
-	if(!menu(&modo,&dimensao))
-		return 0;
+	while(menu(&modo,&dimensao)){		
+		jogador = 0;
 
-	jogo(dimensao,&jogador);	
+		jogo(dimensao,&jogador);	
+		
+		verificaGanhador(jogador);
+	}
 	
-	verificaGanhador(jogador);
-	
-	return 0;
+	return 0;	
 }
 
