@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
 #define N 9
 
 int verificaVitoriaEstendido(int tabuleiro[N][N], int dimensao){
@@ -100,13 +102,15 @@ int verificaVitoria(int tabuleiro[N][N], int dimensao){//vitorias tradicionais
 
 void verificaGanhador(int jogador){
 	if(!jogador){
-		printf("empate \n");
+		printf("Empate \n");
 	}else {
 		if (jogador==1)
        		printf("X ganhou ");
 	    else
 	      	printf("O ganhou ");
-	 }
+	}
+
+	printf("\n------FIM DE JOGO------\n");
 }
 
 void exibeTabuleiro(int tabuleiro[N][N], int dimensao){
@@ -134,7 +138,7 @@ void exibeTabuleiro(int tabuleiro[N][N], int dimensao){
 int menu(int *modo, int *dimensao){
 	int opcao;
 
-	puts("------------ MENU ------------");
+	puts("\n------------ MENU ------------");
 	
 	printf("1.Jogar\n0.Sair\n\n:");
 	scanf("%d",&opcao);
@@ -148,13 +152,12 @@ int menu(int *modo, int *dimensao){
 		printf("\nEscolha as dimensoes do tabuleiro:\n4. 4x4\n5. 5x5\n6. 6x6\n7. 7x7\n8. 8x8\n9. 9x9\n\n:");
 		scanf("%d",dimensao);
 		
-		for(int i = 0; i<100; i++){
-			puts("\n");
-		}
+		system("clear");
 		
 		return 1;
 	}
 }
+
 
 void zeraTabuleiro(int tabuleiro[N][N], int dimensao){
 
@@ -165,7 +168,7 @@ void zeraTabuleiro(int tabuleiro[N][N], int dimensao){
 	}
 }
 
-int jogo(int dimensao, int *ganhador){
+int jogo(int dimensao, int *ganhador, int modo){
 	int vez = 0 ;
 	char jogador;
 	int tabuleiro[N][N];
@@ -182,11 +185,21 @@ int jogo(int dimensao, int *ganhador){
 			jogador = 'O';
 		printf("\n--------- Vez de %c ---------\n", jogador);
 
-		printf("Linha: ");
-		scanf("%d", &linha);
+		if((modo == 1)&&(vez%2)){
+			srand (time(NULL));
+			printf("\nJogada do Computador\n");
+			do{
+				linha = rand() % dimensao;
+				coluna = rand() % dimensao;
+			}while(tabuleiro[linha][coluna]);
 
-		printf("Coluna: ");
-		scanf("%d", &coluna);
+		}else{
+			printf("Linha: ");
+			scanf("%d", &linha);
+
+			printf("Coluna: ");
+			scanf("%d", &coluna);
+		}		
 
 		printf("\n");
 
@@ -194,6 +207,8 @@ int jogo(int dimensao, int *ganhador){
 			tabuleiro[linha][coluna] = 1;
 		else
 			tabuleiro[linha][coluna] = 2;
+
+		system("clear");
 
 		exibeTabuleiro(tabuleiro,dimensao);
 
@@ -216,7 +231,7 @@ int main(void){
 	while(menu(&modo,&dimensao)){		
 		jogador = 0;
 
-		jogo(dimensao,&jogador);	
+		jogo(dimensao,&jogador, modo);	
 		
 		verificaGanhador(jogador);
 	}
