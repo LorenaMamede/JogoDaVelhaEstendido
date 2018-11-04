@@ -140,8 +140,15 @@ int menu(int *modo, int *dimensao){
 
 	puts("\n------------ MENU ------------");
 	
+
 	printf("1.Jogar\n0.Sair\n\n:");
 	scanf("%d",&opcao);
+
+	while((opcao > 1)||(opcao < 0)){
+		printf("\nOpcao invalida!\n");
+		printf("1.Jogar\n0.Sair\n\n:");
+		scanf("%d",&opcao);
+	}
 	
 	if(!opcao)
 		return 0;
@@ -149,9 +156,21 @@ int menu(int *modo, int *dimensao){
 		printf("\nEscolha o modo de jogo: \n1.Um jogador\n2.Dois jogadores\n\n:");
 		scanf("%d",modo);
 		
+		while((*modo > 2)||(*modo < 1)){
+			printf("\nOpcao invalida!\n");
+			printf("\nEscolha o modo de jogo: \n1.Um jogador\n2.Dois jogadores\n\n:");
+			scanf("%d",modo);
+		}
+
 		printf("\nEscolha as dimensoes do tabuleiro:\n4. 4x4\n5. 5x5\n6. 6x6\n7. 7x7\n8. 8x8\n9. 9x9\n\n:");
 		scanf("%d",dimensao);
 		
+		while((*dimensao > 9)||(*dimensao < 4)){
+			printf("\nOpcao invalida!\n");
+			printf("\nEscolha as dimensoes do tabuleiro:\n4. 4x4\n5. 5x5\n6. 6x6\n7. 7x7\n8. 8x8\n9. 9x9\n\n:");
+			scanf("%d",dimensao);
+		}
+
 		system("clear");
 		
 		return 1;
@@ -194,11 +213,18 @@ int jogo(int dimensao, int *ganhador, int modo){
 			}while(tabuleiro[linha][coluna]);
 
 		}else{
-			printf("Linha: ");
-			scanf("%d", &linha);
+			do{
+				printf("Linha: ");
+				scanf("%d", &linha);
 
-			printf("Coluna: ");
-			scanf("%d", &coluna);
+				printf("Coluna: ");
+				scanf("%d", &coluna);
+
+				if((tabuleiro[linha][coluna])||(linha>=dimensao)||(coluna>=dimensao)){
+					puts("\nEntrada invalida! Tente outra!");
+				}
+			}while((tabuleiro[linha][coluna])||(linha>=dimensao)||(coluna>=dimensao));
+			
 		}		
 
 		printf("\n");
