@@ -193,7 +193,7 @@ void zeraTabuleiro(int tabuleiro[N][N], int dimensao){
 	}
 }
 
-int jogo(int dimensao, int *ganhador, int modo){
+void jogo(int dimensao, int *ganhador, int modo){
 	int vez = 0 ;
 	char jogador;
 	int tabuleiro[N][N];
@@ -201,9 +201,11 @@ int jogo(int dimensao, int *ganhador, int modo){
 	int coluna;
 
 	zeraTabuleiro(tabuleiro, dimensao);
+	
 	puts("----- A partida comecou!! -----\n");
 	exibeTabuleiro(tabuleiro,dimensao);
-	do{		
+	
+	while(vez<(dimensao*dimensao)){		
 		if(vez%2)
 			jogador = 'X';
 		else
@@ -247,12 +249,10 @@ int jogo(int dimensao, int *ganhador, int modo){
 		if (vez>4){
 			*ganhador = verificaVitoria(tabuleiro, dimensao);
 			if(*ganhador)
-				return *ganhador;
+				break;
 		}
 		vez++;
-
-	}while(vez<(dimensao*dimensao));
-	return 0;
+	}
 }
 
 int main(void){
@@ -262,9 +262,7 @@ int main(void){
 	
 	while(menu(&modo,&dimensao)){		
 		jogador = 0;
-
-		jogo(dimensao,&jogador, modo);	
-		
+		jogo(dimensao,&jogador, modo);		
 		verificaGanhador(jogador);
 	}
 	
