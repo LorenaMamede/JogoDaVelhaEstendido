@@ -11,8 +11,11 @@ int verificaVitoriaEstendido(int tabuleiro[N][N], int dimensao){
         int somaDiagonalInferior = 0;
         int somaDiagonalSuperior = 0;
         int somaDiagonalBorda = 0;
+        int somaDiagonalBorda2 = 0;
         int decresce = i;
         int acresce = 0;
+        int decresceJ = i;
+        int acresceJ = 0;
         for(int j = 0; j<dimensao;j++){
             if ((j+i) < (dimensao-1)){//quarto caso
                 if((tabuleiro[j+i][j]==tabuleiro[j+1+i][j+1])&&(tabuleiro[j+i][j])){
@@ -36,7 +39,7 @@ int verificaVitoriaEstendido(int tabuleiro[N][N], int dimensao){
                     jogador = tabuleiro[decresce][j];
                 }
                 decresce--;
-            }else if(acresce!=i){
+            }else if(acresce!=(i+1)){
                 if((tabuleiro[acresce][j]==tabuleiro[acresce+1][j+1])&&(tabuleiro[acresce][j])){
                     somaDiagonalSuperior++;
                     jogador = tabuleiro[acresce][j];
@@ -46,9 +49,9 @@ int verificaVitoriaEstendido(int tabuleiro[N][N], int dimensao){
 
 
             if ((j+i) < (dimensao-1)){//sexto caso
-                if((tabuleiro[j][j+1]==tabuleiro[j+1][j+1+i])&&(tabuleiro[j][j+i])){
+                if((tabuleiro[j][j+i]==tabuleiro[j+1][j+1+i])&&(tabuleiro[j][j+i])){
                      somaDiagonalBorda++;
-                     jogador = tabuleiro[j][j+1];
+                     jogador = tabuleiro[j][j+i];
                 }                
             }else{
                 if((tabuleiro[j][dimAux2]==tabuleiro[j+1][dimAux2-1])&&(tabuleiro[j][dimAux2])){
@@ -57,9 +60,24 @@ int verificaVitoriaEstendido(int tabuleiro[N][N], int dimensao){
                 }                
                 dimAux2--;
             }
+
+            if(decresceJ){//setimo caso
+                if((tabuleiro[j][decresceJ]==tabuleiro[j+1][decresceJ-1])&&(tabuleiro[j][decresceJ])){
+                     somaDiagonalBorda2++;
+                     jogador = tabuleiro[j][decresceJ];
+                     decresceJ--;                     
+                }                
+            }else if(acresceJ!=(i+1)){
+                if((tabuleiro[j][acresceJ]==tabuleiro[j+1][acresceJ+1])&&(tabuleiro[j][acresceJ])){
+                    somaDiagonalBorda2++;
+                    jogador = tabuleiro[j][acresceJ];
+                }                
+                acresceJ++;
+            }
+
         }
 
-        if((somaDiagonalInferior==(dimensao-1))||(somaDiagonalSuperior==(dimensao-1))||(somaDiagonalBorda ==(dimensao-1))){//verifica vitoria
+        if((somaDiagonalBorda2 ==(dimensao-1))||(somaDiagonalInferior==(dimensao-1))||(somaDiagonalSuperior==(dimensao-1))||(somaDiagonalBorda ==(dimensao-1))){//verifica vitoria
             return jogador;
         }
     }
