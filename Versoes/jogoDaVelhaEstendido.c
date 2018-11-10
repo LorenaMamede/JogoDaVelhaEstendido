@@ -100,7 +100,6 @@ int verificaVitoria(int tabuleiro[N][N], int dimensao){//vitorias tradicionais
 			}
 		}
 		if((somaLinha == (dimensao-1))||(somaColuna == (dimensao-1))){
-			puts("Tradicional");
 			return jogador;			
 		}
     }
