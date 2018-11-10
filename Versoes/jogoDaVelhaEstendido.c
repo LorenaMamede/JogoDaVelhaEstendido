@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #define N 9
 
-int verificaVitoriaEstendido(int tabuleiro[N][N], int dimensao){
+int verificaVitoriaDiagonal(int tabuleiro[N][N], int dimensao){
     int jogador = 0;
     for(int i = 0; i<dimensao;i++){
         int dimAux = dimensao-1;
@@ -86,8 +86,6 @@ int verificaVitoriaEstendido(int tabuleiro[N][N], int dimensao){
 
 int verificaVitoria(int tabuleiro[N][N], int dimensao){//vitorias tradicionais
 	int jogador, somaLinha, somaColuna;
-	int somaDiagonal = 0;
-	int somaOutraDiagonal = 0;
 	for(int i = 0; i < dimensao; i++){
 		somaLinha = 0;
 		somaColuna = 0;
@@ -101,21 +99,12 @@ int verificaVitoria(int tabuleiro[N][N], int dimensao){//vitorias tradicionais
 				jogador = tabuleiro[j][i];
 			}
 		}
-		if((i+1)!=dimensao){
-			if((tabuleiro[i][i] == tabuleiro[i+1][i+1])&&(tabuleiro[i][i])){//primeiro caso
-				somaDiagonal++;
-				jogador = tabuleiro[i][i];
-			}
-			if((tabuleiro[i][(dimensao-1)-i] == tabuleiro[i+1][dimensao-i])&&(tabuleiro[i][dimensao-1-i])){//primeiro caso
-				somaOutraDiagonal++;
-				jogador = tabuleiro[i][dimensao-1-i];
-			}
-		}
-		if((somaLinha == (dimensao-1))||(somaColuna == (dimensao-1))||(somaDiagonal == (dimensao-1))||(somaOutraDiagonal == (dimensao-1))){
+		if((somaLinha == (dimensao-1))||(somaColuna == (dimensao-1))){
+			puts("Tradicional");
 			return jogador;			
 		}
     }
-    return verificaVitoriaEstendido(tabuleiro,dimensao);
+    return verificaVitoriaDiagonal(tabuleiro,dimensao);
 }
 
 void verificaGanhador(int jogador){
