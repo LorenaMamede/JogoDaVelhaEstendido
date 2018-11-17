@@ -75,11 +75,10 @@ int verificaVitoriaDiagonal(int tabuleiro[N][N], int dimensao){
                 acresceJ++;
             }
 
-        }
-
-        if((somaDiagonalBorda2 ==(dimensao-1))||(somaDiagonalInferior==(dimensao-1))||(somaDiagonalSuperior==(dimensao-1))||(somaDiagonalBorda ==(dimensao-1))){//verifica vitoria
-            return jogador;
-        }
+	        if((somaDiagonalBorda2 ==(dimensao-1))||(somaDiagonalInferior==(dimensao-1))||(somaDiagonalSuperior==(dimensao-1))||(somaDiagonalBorda ==(dimensao-1))){//verifica vitoria
+	            return jogador;
+	        }
+    	}
     }
     return 0;
 }
@@ -98,10 +97,12 @@ int verificaVitoria(int tabuleiro[N][N], int dimensao){//vitorias tradicionais
 				somaColuna++;
 				jogador = tabuleiro[j][i];
 			}
+
+			if((somaLinha == (dimensao-1))||(somaColuna == (dimensao-1))){
+				return jogador;			
+			}
 		}
-		if((somaLinha == (dimensao-1))||(somaColuna == (dimensao-1))){
-			return jogador;			
-		}
+		
     }
     return verificaVitoriaDiagonal(tabuleiro,dimensao);
 }
@@ -229,6 +230,8 @@ void jogo(int dimensao, int *ganhador, int modo){
 				scanf("%d", &coluna);
 
 				if((tabuleiro[linha][coluna])||(linha>=dimensao)||(coluna>=dimensao)){
+					printf("Vc digitou como linha: %d", linha);
+					printf("Vc digitou como coluna: %d", coluna);
 					puts("\nEntrada invalida! Tente outra!");
 				}
 			}while((tabuleiro[linha][coluna])||(linha>=dimensao)||(coluna>=dimensao));
